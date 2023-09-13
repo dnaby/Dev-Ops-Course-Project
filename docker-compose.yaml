@@ -1,0 +1,37 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: passer123
+      POSTGRES_DB: db
+    volumes:
+      - ./db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dnaby@ept.sn
+      PGADMIN_DEFAULT_PASSWORD: passer123
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
+    ports:
+      - "8888:80"
+
+  django: 
+    #build: ./devopsDjangoApp
+    image: dev-ops-course-project-django:latest
+    container_name: django
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./devopsDjangoApp/:/app/
+    ports:
+      - 8000:8000
