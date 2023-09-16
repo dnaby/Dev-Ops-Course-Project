@@ -3,7 +3,7 @@ version: "3.9"
 services:
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:11-bookworm
     restart: always
     environment:
       POSTGRES_USER: root
@@ -13,6 +13,8 @@ services:
       - ./db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -25,13 +27,23 @@ services:
       - ./pgadmin:/var/lib/pgadmin
     ports:
       - "8888:80"
+    depends_on:
+      - postgres
 
   django: 
-    #build: ./devopsDjangoApp
-    image: dev-ops-course-project-django:latest
+    build: ./devopsDjangoApp
+    #image: dev-ops-course-project-django:latest
     container_name: django
-    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      DB_NAME: db
+      DB_USER: root
+      DB_PASSWORD: passer123
+      DB_HOST: postgres
+      DB_PORT: 5432
+    command: python manage.py migrate && python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./devopsDjangoApp/:/app/
     ports:
       - 8000:8000
+    depends_on:
+      - postgres
