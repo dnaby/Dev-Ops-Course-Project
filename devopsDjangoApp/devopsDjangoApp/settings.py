@@ -78,10 +78,10 @@ WSGI_APPLICATION = 'devopsDjangoApp.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "devops_db",
-        "USER": "postgres",
-        "PASSWORD": "12345",
-        "HOST": "127.0.0.1",
+        "NAME": "db",
+        "USER": "root",
+        "PASSWORD": "passer123",
+        "HOST": "postgres",
         "PORT": "5432",
     }
 }
