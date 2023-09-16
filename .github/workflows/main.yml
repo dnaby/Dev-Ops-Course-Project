@@ -12,7 +12,7 @@ jobs:
     container: python:3.11.4-bullseye
 
     services:
-      db:
+      postgres:
         image: postgres:latest
         env:
           POSTGRES_DB: db
