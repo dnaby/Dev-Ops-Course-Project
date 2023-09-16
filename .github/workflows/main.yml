@@ -1,0 +1,79 @@
+name: CI/CD Pipeline
+
+on: 
+  push:
+    branches:  [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  test:
+    runs-on:  ubuntu-latest 
+    container: python:3.11.4-bullseye
+
+    services:
+      db:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: db
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: passer123
+        ports:
+          - 5432:5432
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        cd devopsDjangoApp
+        python -m pip install -r requirements.txt
+        python -m pip install ruff black
+
+    
+    - name: Check the formatting
+      run: |
+        python -m black . --check
+
+    - name: Check the linting
+      run: |
+        python -m ruff check .
+
+    - name: Run Test
+      env:
+        DB_NAME: db
+        DB_USER: root
+        DB_PASSWORD: passer123
+        DB_HOST: localhost
+        DB_PORT: 5432
+      run: |
+        cd devopsDjangoApp
+        python manage.py test
+    
+  build_and_push:
+    runs-on:  ubuntu-latest 
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+        context: ./devopsDjangoApp
+        dockerfile: dockerfile
+        push: true
+        tags: dnaby05/django_app:latest
