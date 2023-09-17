@@ -21,3 +21,29 @@ docker-compose up -d
 - [Second Endpoint - Count the numbers of visits on the endpoint](http://127.0.0.1:8000/count_visits//)
 
 ![pgAdmin 4](./images/count_visits.png)
+
+## Kubernetes
+
+To deploy the app locally, here are the steps.
+
+```bash
+cd kubernetes/
+kubectl apply -f secret.yml
+kubectl apply -f postgres.yml
+kubectl apply -f django.yml
+minikube service @service_name-here
+```
+
+- Services
+
+![Services](./images/services.png)
+
+- Pods
+
+![Pods](./images/pods.png)
+
+- Deployed APP
+
+![Deployed](./images/deployed.png)
+
+Note: We try to change the app url to a domain name using ingress but unfornately it was not succeful.
