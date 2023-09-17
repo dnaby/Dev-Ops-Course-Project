@@ -22,7 +22,7 @@ docker-compose up -d
 
 ![pgAdmin 4](./images/count_visits.png)
 
-# Kubernetes
+## Kubernetes
 
 To deploy the app locally, here are the steps.
 
