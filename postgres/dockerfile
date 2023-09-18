@@ -1,0 +1,13 @@
+# Use the official PostgreSQL image as the base image
+FROM postgres:latest
+
+# Copy your database dump file into the container
+COPY script.sql /docker-entrypoint-initdb.d/
+
+# Set environment variables for the PostgreSQL image
+ENV POSTGRES_USER=root
+ENV POSTGRES_PASSWORD=passer123
+ENV POSTGRES_DB=db
+
+# Expose PostgreSQL port
+EXPOSE 5432

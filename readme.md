@@ -5,8 +5,12 @@
 Clone the repository and move to the directory containing the `docker-compose.yaml` file inside your commande line and execute the following command to run the app.
 
 ```bash
-docker-compose up -d
+docker-compose -f docker-compose.yml up -d
 ```
+
+The compose.yml file is an old version of our docker-compose in which we can have access have to the PGAdmin interface.
+
+But in the new version(`docker-compose.yml`), we removed the PGAdmin container.
 
 ## Images
 
@@ -31,8 +35,12 @@ cd kubernetes/
 kubectl apply -f secret.yml
 kubectl apply -f postgres.yml
 kubectl apply -f django.yml
-minikube service @service_name-here
+minikube service django-service
 ```
+
+- Deployed APP
+
+![Deployed](./images/deployed.png)
 
 - Services
 
@@ -42,8 +50,14 @@ minikube service @service_name-here
 
 ![Pods](./images/pods.png)
 
-- Deployed APP
+- StatefulSet
 
-![Deployed](./images/deployed.png)
+![StatefulSet](./images/statefulsets.png)
 
-Note: We try to change the app url to a domain name using ingress but unfornately it was not succeful.
+- ReplicaSets
+
+![ReplicaSets](./images/replicasets.png)
+
+- Config & Storage
+
+![Config & Storage](./images/config_storage.png)
