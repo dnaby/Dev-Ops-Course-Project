@@ -61,3 +61,7 @@ minikube service django-service
 - Config & Storage
 
 ![Config & Storage](./images/config_storage.png)
+
+## Authors
+
+Job done by `Mouhamadou Naby DIA`, `Abdoulkhadre DIALLO`, `Nassr Eddine El HIMEUR` & `Serigne Saliou WADE`.
